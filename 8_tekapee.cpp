@@ -71,7 +71,7 @@ int main() {
                     int costDown = (startR+1 < rows) ? grid[startR+1][startC] : INT_MAX;
                     int costRight = (startC+1 < cols) ? grid[startR][startC+1] : INT_MAX;
                     
-                    (costDown<=costRight) ? startR++ : startC++;
+                    (costDown>=costRight) ? startR++ : startC++;
                 }
             }
             
