@@ -1,13 +1,42 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 using namespace std;
 
 int main() {
-    //NWC
+    //NWM
 
-    vector<vector<int>> grid = {{3, 1, 7, 4}, {3, 7, 6, 10}, {8, 3, 3, 2}}; // table
-    vector<int> supply = {300, 400, 500}; // supply
-    vector<int> demand = {250, 350, 400, 200}; // demand
+    // file processing
+    ifstream infile("input1.txt");
+    if(!infile) {
+        cerr << "error open file" << endl;
+        return 1;
+    }
+
+    int rows, cols;
+    infile >> rows >> cols;
+
+    vector<vector<int>> grid(rows, vector<int>(cols));
+    for(int i=0; i<rows; i++) {
+        for(int j=0; j<cols; j++) {
+            infile >> grid[i][j];
+        }
+    }
+
+    vector<int> supply(rows);
+    for(int i=0; i<rows; i++) {
+        infile >> supply[i];
+    }
+
+    vector<int> demand(cols);
+    for(int j=0; j<cols; j++) {
+        infile >> demand[j];
+    }
+
+    int optimal;
+    infile >> optimal;
+
+    infile.close(); // close file
 
     int startR = 0; // start row
     int startC = 0; // start col
@@ -31,6 +60,9 @@ int main() {
     }
 
     cout << "The initial feasible basic solution is " << ans << endl;
+    cout << "Difference " << ans-optimal << endl;
+    cout << "Accuracy " << (double(ans)-double(optimal))/double(optimal) << endl;
+    
 
     return 0;
 }
